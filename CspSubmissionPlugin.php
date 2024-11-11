@@ -341,7 +341,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 			if(in_array($args->id, ['titleAbstract', 'submissionFile', 'forTheEditors', 'commentsForTheEditors', 'commentsForTheEditors', 'contributor'])){
 				$submissionId = $request->getUserVar('id');
 				$submission = Repo::submission()->get((int) $submissionId);
-				$publication = Repo::publication()->get((int) $submissionId);
+				$publication = Repo::publication()->get((int) $submission->getData('currentPublicationId'));
 				$section = Repo::section()->get((int) $publication->getData('sectionId'));
 				$sectionAbbrev = $section->getAbbrev($context->getData('primaryLocale'));
 
