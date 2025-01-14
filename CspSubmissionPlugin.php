@@ -125,7 +125,8 @@ class CspSubmissionPlugin extends GenericPlugin {
 						case 'DEBATE':
 						case 'QUEST_METOD':
 						case 'ENTREVISTA':
-							if ($contagemPalavras > 6300) {
+						case 'ESP_TEMATICO':
+							if ($contagemPalavras > 6600) {
 								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
 									'sectoin' => $section->getTitle($publication->getData('locale')),
 									'max'     => 6000,
@@ -136,20 +137,11 @@ class CspSubmissionPlugin extends GenericPlugin {
 						break;
 						case 'EDITORIAL':
 						case 'COM_BREVE':
-							if ($contagemPalavras > 2100) {
-								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
-									'sectoin' => $section->getTitle($publication->getData('locale')),
-									'max'     => 2000,
-									'count'   => $contagemPalavras
-									])
-								];
-							}
-						break;
 						case 'PERSPECT':
-							if ($contagemPalavras > 2310) {
+							if ($contagemPalavras > 2750) {
 								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
 									'sectoin' => $section->getTitle($publication->getData('locale')),
-									'max'     => 2200,
+									'max'     => 2500,
 									'count'   => $contagemPalavras
 									])
 								];
@@ -157,7 +149,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 						break;
 						case 'REVISAO':
 						case 'ENSAIO':
-							if ($contagemPalavras > 8400) {
+							if ($contagemPalavras > 8800) {
 								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
 									'sectoin' => $section->getTitle($publication->getData('locale')),
 									'max'     => 8000,
@@ -166,23 +158,13 @@ class CspSubmissionPlugin extends GenericPlugin {
 								];
 							}
 						break;
-						case 'ESP_TEMATICO':
-							if ($contagemPalavras > 4200) {
-								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
-									'sectoin' => $section->getTitle($publication->getData('locale')),
-									'max'     => 4000,
-									'count'   => $contagemPalavras
-									])
-								];
-							}
-						break;
 						case 'CARTA':
 						case 'COMENTARIOS':
 						case 'RESENHA':
-							if ($contagemPalavras > 1365) {
+							if ($contagemPalavras > 1540) {
 								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
 									'sectoin' => $section->getTitle($publication->getData('locale')),
-									'max'     => 1300,
+									'max'     => 1400,
 									'count'   => $contagemPalavras
 									])
 								];
@@ -199,10 +181,10 @@ class CspSubmissionPlugin extends GenericPlugin {
 							}
 						break;
 						case 'ERRATA':
-							if ($contagemPalavras > 735) {
+							if ($contagemPalavras > 770) {
 								$args[0]['genreId'] = [__('plugins.generic.CspSubmission.SectionFile.errorWordCount', [
 									'sectoin' => $section->getTitle($publication->getData('locale')),
-									'max'     => 70,
+									'max'     => 700,
 									'count'   => $contagemPalavras
 									])
 								];
@@ -448,6 +430,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 		$locale = $args[1]->getData('locale');
 		$context = Application::get()->getRequest()->getContext();
         $publication = $args[1]->getCurrentPublication();
+		$submission = Repo::submission()->get((int) $publication->_data["submissionId"]);
 		$keywords = count($publication->getData('keywords'));
 		$section = Repo::section()->get((int) $publication->getData('sectionId'));
 		$sectionAbbrev = $section->getAbbrev($context->getData('primaryLocale'));
@@ -457,6 +440,12 @@ class CspSubmissionPlugin extends GenericPlugin {
 			}elseif(count($publication->getData('keywords', $locale)) < 3 or count($publication->getData('keywords', $locale)) > 5){
 				$args[0]["keywords"] = [$locale => [__('plugins.generic.CspSubmission.keywords.Notification')]];
 			}
+		}
+		if(!$submission->getData('conflitoInteresse')){
+			$args[0]["conflitoInteresse"] = [$locale => [__('plugins.generic.CspSubmission.conflitoInteresse.Notification')]];
+		}
+		if(!$submission->getData('consideracoesEticas')){
+			$args[0]["consideracoesEticas"] = [$locale => [__('plugins.generic.CspSubmission.consideracoesEticas.Notification')]];
 		}
 	}
 
