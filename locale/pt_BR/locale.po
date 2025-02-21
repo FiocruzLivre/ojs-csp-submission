@@ -21,6 +21,9 @@ msgstr "Tema"
 msgid "plugins.generic.CspSubmission.conflitoInteresse"
 msgstr "Seu artigo possui potencial conflito de interesse?"
 
+msgid "plugins.generic.CspSubmission.conflitoInteresse.Notification'"
+msgstr "É necessário selecionar o campo se há conflito de interesse"
+
 msgid "plugins.generic.CspSubmission.codigoFasciculoTematico"
 msgstr "Código do fascículo temático"
 
@@ -53,6 +56,9 @@ msgstr "Só é permitido inseir um arquivo de legendas"
 
 msgid "plugins.generic.CspSubmission.consideracoesEticas"
 msgstr "Considerações éticas e legais"
+
+msgid "plugins.generic.CspSubmission.consideracoesEticas.Notification"
+msgstr "É necessário preencher o campo Considerações éticas e legais"
 
 msgid "plugins.generic.CspSubmission.consideracoesEticas.checkbox.yes"
 msgstr "No caso de artigos que envolvem pesquisas com seres humanos, foram cumpridos os princípios contidos na Declaração de Helsinki, além de atendida a legislação específica do país no qual a pesquisa foi realizada. No caso de pesquisa envolvendo animais da fauna silvestre e/ou cobaias foram atendidas as legislações pertinentes."
