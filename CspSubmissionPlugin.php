@@ -231,6 +231,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 		$locale = $args[0]->getData('locale');
 		$context = $request->getContext();
 		$primaryLocale = $context->getData('primaryLocale');
+		$fileStage = $args[0]->getData('fileStage'); //Estágio de publicação
 
 		if($request->_requestVars["revisedFileId"]){
 			$newName = $args[1]->getData('name',$args[1]->getData('locale'));
@@ -240,7 +241,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 			return true;
 		}
 		// Renomeia arquivo inserido na etapa de envio de arquivos da submissão, atribuindo o nome do gênero do arquivo
-		if($submission->getData('submissionProgress') == "start" && !$args[2]["notRename"]){
+		if($submission->getData('submissionProgress') == "start" && !$args[2]["notRename"] && $fileStage <> 17){
 			$genreDao = DAORegistry::getDAO('GenreDAO'); /** @var GenreDAO $genreDao */
 			$genre = $genreDao->getById($args[0]->getData('genreId'), $context->getId());
 			$genreNameLocale = $genre->getName($locale);
