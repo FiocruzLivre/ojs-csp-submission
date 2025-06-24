@@ -420,6 +420,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 					$args->removeField('url');
 					$args->removeField('userGroupId');
 
+					// Atribui colaborador com papel de autor pois o campo de escolha do papel foi ocultado
 					$authorgroup = Repo::userGroup()->getByRoleIds([Role::ROLE_ID_AUTHOR], $context->getId(), true)->first();
 					$args->addHiddenField('userGroupId', $authorgroup->getData('id'));
 				}
