@@ -1,6 +1,13 @@
-# setup
+# CSP Submission Plugin
 
-```bash
-git clone https://github.com/librecodecoop/ojs-csp-submission.git plugins/generic/cspSubmission
-composer --working-dir=plugins/generic/cspSubmission install
-```
+Plugin to customize the submission flow in Open Journal System (OJS) according to Cadernos de Saúde Pública da Fiocruz requirements.
+
+
+## Instalation
+
+**OJS version: 3.4.0.1**
+
+- Clone this repo: ``git clone --branch ojs-3-4 https://github.com/FiocruzLivre/ojs-csp-submission.git cspSubmission`` inside the directory ``ojs/plugins/generic/``
+- Install de dependences: ``composer --working-dir=plugins/generic/cspSubmission install``
+- Enable the plugin in _Website > Plugins_ area
+
