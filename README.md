@@ -3,7 +3,7 @@
 Plugin to customize the submission flow in Open Journal System (OJS) according to Cadernos de Saúde Pública da Fiocruz requirements.
 
 
-## Instalation
+## Installation
 
 **OJS version: 3.4.0.1**
 
