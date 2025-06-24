@@ -5,8 +5,11 @@ Plugin to customize the submission flow in Open Journal System (OJS) according t
 
 ## Installation
 
-**OJS version: 3.4.0.1**
+**OJS version: 3.4.0**
 
-- Clone this repo: ``git clone --branch ojs-3-4 https://github.com/FiocruzLivre/ojs-csp-submission.git cspSubmission`` inside the directory ``ojs/plugins/generic/``
-- Install de dependences: ``composer --working-dir=plugins/generic/cspSubmission install``
-- Enable the plugin in _Website > Plugins_ area
+1) Clone this repo inside the directory ``ojs/plugins/generic/`` :
+
+   ``git clone --branch ojs-3-4 https://github.com/FiocruzLivre/ojs-csp-submission.git cspSubmission``
+
+    > The plugin must be inside a _cspSubmission_ named folder and checked out to the ojs-3-4 branch
+2) In the system, enable the plugin in _Website > Plugins_ area
