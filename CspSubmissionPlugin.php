@@ -328,6 +328,33 @@ class CspSubmissionPlugin extends GenericPlugin {
 	public function formConfigBefore($hookName, $args) {
 		$context = Application::get()->getRequest()->getContext();
 		$request = Application::get()->getRequest();
+		// Customiza formulário de autor/coautor
+		if($args->id == "contributor"){
+			$orcid = $args->getField('orcid');
+			$orcid->isRequired = true;
+
+			$familyName = $args->getField('familyName');
+			$familyName->isRequired = true;
+
+			$affiliation = $args->getField('affiliation');
+			$affiliation->description = __('user.affiliation.description');
+			$affiliation->size = "large";
+
+			// Adiciona campo Endereço postal em formulário de inclusão de autor/coautor na submissão
+			$args->addField(new FieldTextarea('mailingAddress', [
+				'label' => __('common.mailingAddress'),
+				'isRequired' => true,
+				'size' => 'small',
+			]));
+
+			$args->removeField('preferredPublicName');
+			$args->removeField('url');
+			$args->removeField('userGroupId');
+
+			// Atribui colaborador com papel de autor pois o campo de escolha do papel foi ocultado
+			$authorgroup = Repo::userGroup()->getByRoleIds([Role::ROLE_ID_AUTHOR], $context->getId(), true)->first();
+			$args->addHiddenField('userGroupId', $authorgroup->getData('id'));
+		}
 		if($request->_router->_page == 'submission'){
 			if($args->id == "startSubmission"){
 				$args->removeField('title');
@@ -415,33 +442,6 @@ class CspSubmissionPlugin extends GenericPlugin {
 						'size' => 'normal',
 						'value' => $context->getData('agradecimentos'),
 					]));
-				}
-
-				if($args->id == "contributor"){
-					$orcid = $args->getField('orcid');
-					$orcid->isRequired = true;
-
-					$familyName = $args->getField('familyName');
-					$familyName->isRequired = true;
-
-					$affiliation = $args->getField('affiliation');
-					$affiliation->description = __('user.affiliation.description');
-					$affiliation->size = "large";
-
-					// Adiciona campo Endereço postal em formulário de inclusão de autor/coautor na submissão
-					$args->addField(new FieldTextarea('mailingAddress', [
-						'label' => __('common.mailingAddress'),
-						'isRequired' => true,
-						'size' => 'small',
-					]));
-
-					$args->removeField('preferredPublicName');
-					$args->removeField('url');
-					$args->removeField('userGroupId');
-
-					// Atribui colaborador com papel de autor pois o campo de escolha do papel foi ocultado
-					$authorgroup = Repo::userGroup()->getByRoleIds([Role::ROLE_ID_AUTHOR], $context->getId(), true)->first();
-					$args->addHiddenField('userGroupId', $authorgroup->getData('id'));
 				}
 			}
 		}
