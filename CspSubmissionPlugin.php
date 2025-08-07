@@ -50,6 +50,7 @@ class CspSubmissionPlugin extends GenericPlugin {
 			Hook::add('Submission::edit', [$this, 'submissionEdit']);
 			Hook::add('Schema::get::publication', [$this, 'schemaGetPublication']);
 			Hook::add('TemplateManager::display', [$this, 'templateManagerDisplay']);
+			Hook::add('Schema::get::author', [$this, 'SchemaGetAuthor']);
 		}
 		return $success;
 	}
@@ -313,6 +314,17 @@ class CspSubmissionPlugin extends GenericPlugin {
 		return false;
     }
 
+	public function SchemaGetAuthor(string $hookName, array $args){
+		$schema = $args[0]; /** @var stdClass */
+		// Adiciona Endereço postal em esquema de Autor
+		$schema->properties->mailingAddress = (object) [
+			'type' => 'string',
+			'apiSummary' => true,
+			'multilingual' => false,
+			'validation' => ['required']
+		];
+	}
+
 	public function formConfigBefore($hookName, $args) {
 		$context = Application::get()->getRequest()->getContext();
 		$request = Application::get()->getRequest();
@@ -416,6 +428,13 @@ class CspSubmissionPlugin extends GenericPlugin {
 					$affiliation->description = __('user.affiliation.description');
 					$affiliation->size = "large";
 
+					// Adiciona campo Endereço postal em formulário de inclusão de autor/coautor na submissão
+					$args->addField(new FieldTextarea('mailingAddress', [
+						'label' => __('common.mailingAddress'),
+						'isRequired' => true,
+						'size' => 'small',
+					]));
+
 					$args->removeField('preferredPublicName');
 					$args->removeField('url');
 					$args->removeField('userGroupId');
@@ -448,6 +467,15 @@ class CspSubmissionPlugin extends GenericPlugin {
 		}
 		if(!$submission->getData('consideracoesEticas')){
 			$args[0]["consideracoesEticas"] = [$locale => [__('plugins.generic.CspSubmission.consideracoesEticas.Notification')]];
+		}
+		// Valida se campos Endereço postal e Contribuição do autor no trabalho foram preenchidos
+		foreach ($publication->getData('authors') as $author) {
+			if($author->getData('mailingAddress') == null){
+				$args[0]["contributors"] = [__('plugins.generic.CspSubmission.authorAddress.Notification')];
+			}
+			if($author->getData('biography') == null){
+				$args[0]["contributors"] = [__('plugins.generic.CspSubmission.authorBiography.Notification')];
+			}
 		}
 	}
 

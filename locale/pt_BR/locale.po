@@ -22,7 +22,7 @@ msgid "plugins.generic.CspSubmission.conflitoInteresse"
 msgstr "Seu artigo possui potencial conflito de interesse?"
 
 msgid "plugins.generic.CspSubmission.conflitoInteresse.Notification'"
-msgstr "É necessário selecionar o campo se há conflito de interesse"
+msgstr "É necessário inserir o enderećo em todos os co-autores"
 
 msgid "plugins.generic.CspSubmission.codigoFasciculoTematico"
 msgstr "Código do fascículo temático"
@@ -47,6 +47,12 @@ msgstr "Formato de arquivo inválido! Formatos permitidos para este tipo de arqu
 
 msgid "plugins.generic.CspSubmission.keywords.Notification"
 msgstr "São necessárias no mínimo 3 e no máximo 5 palavras-chave"
+
+msgid "plugins.generic.CspSubmission.authorBiography.Notification"
+msgstr "É necessário preencher o campo \"Contribuição do autor no trabalho\" para todos os autores"
+
+msgid "plugins.generic.CspSubmission.authorAddress.Notification"
+msgstr "É necessário preencher o campo \"Endereço postal\" para todos os autore"
 
 msgid "plugins.generic.CspSubmission.submission.bodyTextFile.limit"
 msgstr "Só é permitido inseir um arquivo Corpo do texto"
