@@ -336,9 +336,13 @@ class CspSubmissionPlugin extends GenericPlugin {
 			$familyName = $args->getField('familyName');
 			$familyName->isRequired = true;
 
+			$familyName = $args->getField('biography');
+			$familyName->isRequired = true;
+
 			$affiliation = $args->getField('affiliation');
 			$affiliation->description = __('user.affiliation.description');
 			$affiliation->size = "large";
+			$affiliation->isRequired = true;
 
 			// Adiciona campo Endereço postal em formulário de inclusão de autor/coautor na submissão
 			$args->addField(new FieldTextarea('mailingAddress', [
