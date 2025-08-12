@@ -316,8 +316,18 @@ class CspSubmissionPlugin extends GenericPlugin {
 
 	public function SchemaGetAuthor(string $hookName, array $args){
 		$schema = $args[0]; /** @var stdClass */
-		// Adiciona Endereço postal em esquema de Autor
+		// Adiciona campos de endereço em esquema de Autor
 		$schema->properties->mailingAddress = (object) [
+			'type' => 'string',
+			'apiSummary' => true,
+			'multilingual' => false,
+			'validation' => ['required']
+		];		$schema->properties->region = (object) [
+			'type' => 'string',
+			'apiSummary' => true,
+			'multilingual' => false,
+			'validation' => ['required']
+		];		$schema->properties->city = (object) [
 			'type' => 'string',
 			'apiSummary' => true,
 			'multilingual' => false,
@@ -344,12 +354,24 @@ class CspSubmissionPlugin extends GenericPlugin {
 			$affiliation->size = "large";
 			$affiliation->isRequired = true;
 
-			// Adiciona campo Endereço postal em formulário de inclusão de autor/coautor na submissão
-			$args->addField(new FieldTextarea('mailingAddress', [
-				'label' => __('common.mailingAddress'),
+			// Adiciona campo Endereço em formulário de inclusão de autor/coautor na submissão
+			$args->addField(new FieldText('region', [
+				'label' => __('plugins.themes.csp.user.region'),
 				'isRequired' => true,
 				'size' => 'small',
-			]));
+			]),[FIELD_POSITION_AFTER, 'country']);
+
+			$args->addField(new FieldText('city', [
+				'label' => __('stats.city'),
+				'isRequired' => true,
+				'size' => 'medium',
+			]),[FIELD_POSITION_AFTER, 'region']);
+
+			$args->addField(new FieldText('mailingAddress', [
+				'label' => __('common.mailingAddress'),
+				'isRequired' => true,
+				'size' => 'large',
+			]),[FIELD_POSITION_AFTER, 'city']);
 
 			$args->removeField('preferredPublicName');
 			$args->removeField('url');
@@ -474,6 +496,12 @@ class CspSubmissionPlugin extends GenericPlugin {
 		}
 		// Valida se campos Endereço postal e Contribuição do autor no trabalho foram preenchidos
 		foreach ($publication->getData('authors') as $author) {
+			if($author->getData('region') == null){
+				$args[0]["contributors"] = [__('plugins.generic.CspSubmission.authorAddress.Notification')];
+			}
+			if($author->getData('city') == null){
+				$args[0]["contributors"] = [__('plugins.generic.CspSubmission.authorAddress.Notification')];
+			}
 			if($author->getData('mailingAddress') == null){
 				$args[0]["contributors"] = [__('plugins.generic.CspSubmission.authorAddress.Notification')];
 			}
